@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Practice with Variables</title>
+</head>
+<body>
+    <h1>JavaScript Practice Week 6</h1>
+
+    <h2>1. Temperature Conversion</h2>
+    <label for="celsiusInput">Celsius:</label>
+    <input type="number" id="celsiusInput">
+    <button onclick="showTemperatureConversion()">Convert to Fahrenheit</button>
+    <p id="temp-conversion"></p>
+
+    <label for="fahrenheitInput">Fahrenheit:</label>
+    <input type="number" id="fahrenheitInput">
+    <button onclick="convertFahrenheitToCelsius()">Convert to Celsius</button>
+    <p id="fahrenheit-to-celsius"></p>
+
+    <h2>2. Current Day and Time</h2>
+    <button onclick="displayCurrentDayAndTime()">Show Current Day and Time</button>
+    <p id="current-day-time"></p>
+
+    <h2>3. Leap Year Check</h2>
+    <label for="leapYearInput">Year:</label>
+    <input type="number" id="leapYearInput">
+    <button onclick="checkLeapYear()">Check Leap Year</button>
+    <p id="leap-year"></p>
+
+    <h2>4. Sundays on January 1st</h2>
+    <button onclick="checkSundays()">Check Sundays</button>
+    <p id="sundays"></p>
+
+    <h2>5. Remove Character from String</h2>
+    <label for="removeCharInput">String:</label>
+    <input type="text" id="removeCharInput">
+    <label for="charPositionInput">Position:</label>
+    <input type="number" id="charPositionInput">
+    <button onclick="removeCharacter()">Remove Character</button>
+    <p id="remove-char"></p>
+
+    <script>
+         function convertCelsiusToFahrenheit() {
+            const celsiusInput = parseFloat(document.getElementById("celsiusInput").value);
+            const fahrenheitOutput = celsiusToFahrenheit(celsiusInput);
+            document.getElementById("celsius-to-fahrenheit").innerText =
+                `${celsiusInput}°C is ${fahrenheitOutput} °F.`;
+        }
+
+        function convertFahrenheitToCelsius() {
+            const fahrenheitInput = parseFloat(document.getElementById("fahrenheitInput").value);
+            const celsiusOutput = fahrenheitToCelsius(fahrenheitInput);
+            document.getElementById("fahrenheit-to-celsius").innerText =
+                `${fahrenheitInput}°F is ${celsiusOutput}°C.`;
+        }
+
+        function celsiusToFahrenheit(celsius) {
+            return (celsius * 9/5) + 32;
+        }
+
+        function fahrenheitToCelsius(fahrenheit) {
+            return (fahrenheit - 32) * 5/9;
+        }
+
+
+
+        function displayCurrentDayAndTime() {
+            const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            const now = new Date();
+
+            const day = days[now.getDay()];
+            let hours = now.getHours();
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+
+            document.getElementById("current-day-time").innerText =
+                `Today is : ${day}.\nCurrent time is : ${hours} ${ampm} : ${minutes} : ${seconds}`;
+        }
+
+        function checkLeapYear() {
+            const yearInput = parseInt(document.getElementById("leapYearInput").value);
+            const leapYearResult = isLeapYear(yearInput);
+            document.getElementById("leap-year").innerText = leapYearResult;
+        }
+
+        function isLeapYear(year) {
+            if (year % 4 === 0) {
+                if (year % 100 === 0) {
+                    if (year % 400 === 0) {
+                        return `${year} is a leap year.`;
+                    } else {
+                        return `${year} is not a leap year.`;
+                    }
+                }
+                return `${year} is a leap year.`;
+            }
+            return `${year} is not a leap year.`;
+        }
+
+        function checkSundays() {
+            let sundayYears = [];
+            for (let year = 2014; year <= 2050; year++) {
+                let date = new Date(year, 0, 1);
+                if (date.getDay() === 0) {
+                    sundayYears.push(year);
+                }
+            }
+
+            let result = `${sundayYears.length} times\n`;
+            sundayYears.forEach(year => result += `1st January is being a Sunday ${year}\n`);
+            document.getElementById("sundays").innerText = result;
+        }
+
+
+        function removeCharacter() {
+            const stringInput = document.getElementById("removeCharInput").value;
+            const positionInput = parseInt(document.getElementById("charPositionInput").value);
+            const resultString = removeCharacterAtPosition(stringInput, positionInput);
+            document.getElementById("remove-char").innerText = resultString;
+        }
+
+        function removeCharacterAtPosition(str, position) {
+            return str.slice(0, position) + str.slice(position + 1);
+        }
+    </script>
+</body>
+</html>
